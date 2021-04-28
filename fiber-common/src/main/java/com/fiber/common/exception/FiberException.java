@@ -1,5 +1,7 @@
 package com.fiber.common.exception;
 
+import com.fiber.common.enums.ResponseCode;
+
 /**
  * @author panyox
  */
@@ -12,6 +14,11 @@ public class FiberException extends RuntimeException {
     public FiberException(int code, final String message) {
         super(message);
         this.code = code;
+    }
+
+    public FiberException(ResponseCode resp) {
+        super(resp.getMessage());
+        this.code = resp.getCode();
     }
 
     public FiberException(final Throwable e) {

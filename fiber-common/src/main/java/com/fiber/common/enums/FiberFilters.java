@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum FiberFilters {
 
+    CONTEXT(0, "context"),
+    ROUTER(1, "router"),
     DUBBO(100, "dubbo");
 
 

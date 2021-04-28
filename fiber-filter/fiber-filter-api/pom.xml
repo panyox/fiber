@@ -20,5 +20,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fiber</groupId>
+            <artifactId>fiber-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

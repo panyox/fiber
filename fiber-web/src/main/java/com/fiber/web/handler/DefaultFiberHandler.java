@@ -34,14 +34,15 @@ public class DefaultFiberHandler implements FiberHandler {
                 err -> handleError(err, exchange),
                 () -> handleDone(exchange));
         ResponseBuilder resp = SpringBeanUtils.getInstance().getBean(ResponseBuilder.class);
-        Object data = Optional.ofNullable(exchange.getAttributes().get(Constants.FiberError))
+        Object data = Optional.ofNullable(exchange.getAttributes().get(Constants.FIBER_ERROR))
                 .map(e -> resp.error((Throwable) e))
-                .orElseGet(() -> resp.ok(exchange.getAttributes().get(Constants.FiberContent)));
+                .orElseGet(() -> resp.ok(exchange.getAttributes().get(Constants.FIBER_CONTENT)));
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(data));
     }
 
     private void handleError(Throwable ex, ServerWebExchange exchange) {
-        exchange.getAttributes().put(Constants.FiberError, ex);
+        System.out.println(ex);
+        exchange.getAttributes().put(Constants.FIBER_ERROR, ex);
     }
 
     private void handleDone(ServerWebExchange exchange) {

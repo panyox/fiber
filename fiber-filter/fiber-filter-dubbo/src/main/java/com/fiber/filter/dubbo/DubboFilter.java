@@ -18,8 +18,8 @@ public class DubboFilter implements FiberFilter {
     @Override
     public Mono<FiberFilter> filter(ServerWebExchange exchange) {
         if (exchange.getRequest().getMethod().matches("GET")) {
-            List<User> users = Arrays.asList(new User(1, "jack", 18), new User(2, "Markus", 32));
-            exchange.getAttributes().put(Constants.FiberContent, users);
+            List<User> users = Arrays.asList(new User(1, "测试", 18), new User(2, "Markus", 32));
+            exchange.getAttributes().put(Constants.FIBER_CONTENT, users);
         } else {
             throw new FiberException(101, "Not found");
         }

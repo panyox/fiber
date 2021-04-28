@@ -1,7 +1,6 @@
 package com.fiber.web.configuration;
 
 import com.fiber.filter.api.FiberFilter;
-import com.fiber.filter.dubbo.DubboFilter;
 import com.fiber.web.handler.DefaultFiberHandler;
 import com.fiber.web.handler.FiberHandler;
 import org.springframework.beans.factory.ObjectProvider;
@@ -22,13 +21,8 @@ import java.util.stream.Collectors;
  * @author panyox
  */
 @Configuration
-@Import(value = {ResponseConfiguration.class, ContextConfiguration.class})
+@Import(value = {ResponseConfiguration.class, ContextConfiguration.class, FilterConfiguration.class})
 public class FiberConfiguration {
-
-    @Bean
-    public FiberFilter dubboFilter() {
-        return new DubboFilter();
-    }
 
     /**
      * fiber handler
@@ -53,5 +47,5 @@ public class FiberConfiguration {
     public RouterFunction<ServerResponse> route(FiberHandler handler) {
         return RouterFunctions.route(RequestPredicates.all(), handler::handle);
     }
-    
+
 }

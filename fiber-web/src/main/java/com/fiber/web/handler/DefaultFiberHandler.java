@@ -3,7 +3,7 @@ package com.fiber.web.handler;
 import com.fiber.common.constants.Constants;
 import com.fiber.common.response.ResponseBuilder;
 import com.fiber.filter.api.FiberFilter;
-import com.fiber.web.response.DefaultResponseBuilder;
+import com.fiber.filter.api.utils.SpringBeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author panyox
@@ -32,9 +33,11 @@ public class DefaultFiberHandler implements FiberHandler {
         fls.subscribe(ft -> ft.filter(exchange),
                 err -> handleError(err, exchange),
                 () -> handleDone(exchange));
-        ResponseBuilder responseBuilder = new DefaultResponseBuilder();
-        //Object res = Objects.isNull(exchange.getAttributes().get(Constants.FiberError))?responseBuilder.ok();
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue("test"));
+        ResponseBuilder resp = SpringBeanUtils.getInstance().getBean(ResponseBuilder.class);
+        Object data = Optional.ofNullable(exchange.getAttributes().get(Constants.FiberError))
+                .map(e -> resp.error((Throwable) e))
+                .orElseGet(() -> resp.ok(exchange.getAttributes().get(Constants.FiberContent)));
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(data));
     }
 
     private void handleError(Throwable ex, ServerWebExchange exchange) {
@@ -42,6 +45,6 @@ public class DefaultFiberHandler implements FiberHandler {
     }
 
     private void handleDone(ServerWebExchange exchange) {
-
+        //do something when all filter done
     }
 }

@@ -5,7 +5,7 @@ package com.fiber.common.response;
  */
 public interface ResponseBuilder<T> {
 
-    T ok(int code, String msg, Object data);
+    T ok(Object data);
 
-    T error(int code, String msg, Object data);
+    T error(Throwable error);
 }

@@ -9,6 +9,12 @@ import reactor.core.publisher.Mono;
  */
 public interface FiberHandler {
 
+    /**
+     * handle request
+     *
+     * @param request
+     * @return
+     */
     Mono<ServerResponse> handle(ServerRequest request);
 
 }

@@ -18,5 +18,11 @@ public interface Constants {
     String ROUTE_DATA = "routeData";
 
     String SERVICE_DATA = "serviceData";
-    
+
+    String BODY_DATA = "bodyData";
+
+    String FORM_DATA = "formData";
+
+    String QUERY_DATA = "queryData";
+
 }

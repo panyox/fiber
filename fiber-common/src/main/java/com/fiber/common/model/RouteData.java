@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author panyox
@@ -16,7 +17,13 @@ public class RouteData implements Serializable {
 
     private String name;
 
+    private String path;
+
     private String serviceId;
+
+    private String rpcType;
+
+    private String httpMethod;
 
     private Boolean enable;
 
@@ -24,6 +31,6 @@ public class RouteData implements Serializable {
 
     private String methodName;
 
-    private String parameterTypes;
+    private List<RouteParam> parameters;
 
 }

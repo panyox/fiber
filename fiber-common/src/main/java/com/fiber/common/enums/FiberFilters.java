@@ -13,6 +13,7 @@ public enum FiberFilters {
 
     CONTEXT(0, "context"),
     ROUTER(1, "router"),
+    DATA(2,"data"),
     DUBBO(100, "dubbo");
 
 

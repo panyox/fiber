@@ -41,7 +41,7 @@ public class DefaultFiberHandler implements FiberHandler {
     }
 
     private void handleError(Throwable ex, ServerWebExchange exchange) {
-        System.out.println(ex);
+        ex.printStackTrace();
         exchange.getAttributes().put(Constants.FIBER_ERROR, ex);
     }
 

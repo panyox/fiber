@@ -30,6 +30,7 @@ public class RouteFilter implements FiberFilter {
         if (Objects.isNull(routeData)) {
             routeNotFound(context);
         }
+        log.info("route data: {}", routeData);
         if (!routeData.getEnable()) {
             routeNotable(context);
         }

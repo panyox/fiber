@@ -39,7 +39,12 @@
         <dependency>
             <groupId>com.fiber</groupId>
             <artifactId>fiber-filter-router</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fiber</groupId>
+            <artifactId>fiber-filter-data</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

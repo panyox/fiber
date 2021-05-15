@@ -6,6 +6,7 @@ import com.fiber.common.utils.ListUtil;
 import com.fiber.filter.api.param.DubboParamBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -20,6 +21,9 @@ public class DefaultDubboParameterBuilder implements DubboParamBuilder {
 
     @Override
     public Pair<String[], Object[]> build(String data, List<RouteParam> parameterTypes) {
+        if (StringUtils.isBlank(data) || parameterTypes == null || parameterTypes.size() == 0) {
+            return new ImmutablePair<>(new String[]{}, new Object[]{});
+        }
         Map<String, Object> dataMap = GsonUtil.getInstance().toObjectMap(data);
         String[] types = new String[parameterTypes.size()];
         Object[] objects = new Object[parameterTypes.size()];

@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author panyox
@@ -31,6 +31,6 @@ public class RouteData implements Serializable {
 
     private String methodName;
 
-    private List<RouteParam> parameters;
+    private Map<String, String> parameters;
 
 }

@@ -1,4 +1,4 @@
-package com.fiber.common.annotation;
+package com.fiber.rpc.dubbo.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,14 +8,13 @@ import java.lang.annotation.Target;
 /**
  * @author panyox
  */
-@Target({ElementType.TYPE,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Route {
+@Target(ElementType.METHOD)
+@FiberRoute(method = RouteMethod.DELETE)
+public @interface DeleteRoute {
 
     String value() default "";
 
     String name() default "";
-
-    RouteMethod method() default RouteMethod.GET;
 
 }

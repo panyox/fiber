@@ -5,6 +5,7 @@ import com.fiber.common.constants.Constants;
 import com.fiber.common.enums.FiberFilters;
 import com.fiber.common.model.FiberContext;
 import com.fiber.common.model.RouteData;
+import com.fiber.filter.api.AsyncFiberFilter;
 import com.fiber.filter.api.FiberFilter;
 import com.fiber.filter.dubbo.handler.DubboServiceHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +14,13 @@ import reactor.core.publisher.Mono;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author panyox
  */
 @Slf4j
-public class DubboFilter implements FiberFilter {
+public class DubboFilter extends AsyncFiberFilter {
 
     private DubboServiceHandler serviceHandler;
 
@@ -27,20 +29,23 @@ public class DubboFilter implements FiberFilter {
     }
 
     @Override
-    public Mono<FiberFilter> filter(ServerWebExchange exchange) {
+    public Mono<FiberFilter> async(CompletableFuture<Object> future, ServerWebExchange exchange) {
         FiberContext context = exchange.getAttribute(Constants.FIBER_CONTEXT);
         Objects.requireNonNull(context);
         RouteData routeData = exchange.getAttribute(Constants.ROUTE_DATA);
         Objects.requireNonNull(routeData);
         //do invoke dubbo
+        Object parameters;
         if (RouteMethod.GET.equals(RouteMethod.valueOf(context.getMethod()))) {
-            Object data = Optional.ofNullable(exchange.getAttribute(Constants.QUERY_DATA)).orElse("{}");
-            log.info("query: {}", data);
-            exchange.getAttributes().put(Constants.FIBER_CONTENT, data);
-        } else if (RouteMethod.POST.equals(RouteMethod.valueOf(context.getMethod()))) {
-            Object res = Optional.ofNullable(exchange.getAttribute(Constants.FORM_DATA)).orElse(exchange.getAttribute(Constants.BODY_DATA));
-            exchange.getAttributes().put(Constants.FIBER_CONTENT, res);
+            parameters = Optional.ofNullable(exchange.getAttribute(Constants.QUERY_DATA)).orElse("{}");
+        } else {
+            parameters = Optional.ofNullable(exchange.getAttribute(Constants.FORM_DATA)).orElse(exchange.getAttribute(Constants.BODY_DATA));
         }
+        CompletableFuture<Object> result = serviceHandler.invokeAsync((String) parameters, routeData, exchange);
+        result.thenApply(res -> {
+            future.complete(res);
+            return res;
+        });
         return Mono.just(this);
     }
 
@@ -53,4 +58,5 @@ public class DubboFilter implements FiberFilter {
     public int index() {
         return FiberFilters.DUBBO.getIndex();
     }
+
 }

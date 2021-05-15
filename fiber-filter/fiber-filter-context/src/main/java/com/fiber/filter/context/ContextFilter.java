@@ -5,17 +5,20 @@ import com.fiber.common.enums.FiberFilters;
 import com.fiber.common.enums.RpcType;
 import com.fiber.common.model.FiberContext;
 import com.fiber.filter.api.FiberFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.system.SystemProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
  * @author panyox
  */
+@Slf4j
 public class ContextFilter implements FiberFilter {
 
     @Override
@@ -32,6 +35,7 @@ public class ContextFilter implements FiberFilter {
         context.setMethod(request.getMethodValue());
         context.setPath(request.getPath().value());
         exchange.getAttributes().put(Constants.FIBER_CONTEXT, context);
+        log.info("context: {}", new Date());
         return Mono.just(this);
     }
 

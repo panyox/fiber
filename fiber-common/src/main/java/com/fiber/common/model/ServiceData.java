@@ -16,8 +16,14 @@ public class ServiceData implements Serializable {
 
     private String name;
 
+    private String version;
+
+    private String interfaceName;
+
     private Boolean enable;
 
     private String config;
+
+    private String desc;
 
 }

@@ -1,6 +1,6 @@
 package com.fiber.web.response;
 
-import com.fiber.common.enums.ResponseCode;
+import com.fiber.common.response.ResponseCode;
 import lombok.Data;
 
 /**

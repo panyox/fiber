@@ -1,6 +1,6 @@
 package com.fiber.common.exception;
 
-import com.fiber.common.enums.ResponseCode;
+import com.fiber.common.response.ResponseCode;
 
 /**
  * @author panyox

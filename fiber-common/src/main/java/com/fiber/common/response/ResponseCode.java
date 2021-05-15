@@ -1,4 +1,4 @@
-package com.fiber.common.enums;
+package com.fiber.common.response;
 
 import lombok.Getter;
 
@@ -13,6 +13,7 @@ public enum ResponseCode {
     SERVICE_NOT_ABLE(101, "Service not able to use"),
     ROUTE_NOT_FOUND(102, "Route not found"),
     ROUTE_NOT_ABLE(103, "Route not able to use"),
+    RPC_NO_RESULT(104, "Can not get RPC result"),
     INNER_ERROR(500, "Internal error");
 
     private int code;

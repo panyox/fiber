@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum RpcType {
 
     DUBBO("dubbo"),
-
+    SPRING_CLOUD("spring_cloud"),
+    SOFA("sofa"),
     HTTP("http");
 
     private String name;

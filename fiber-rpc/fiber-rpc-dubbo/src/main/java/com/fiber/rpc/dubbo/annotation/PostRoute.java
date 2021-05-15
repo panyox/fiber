@@ -1,4 +1,6 @@
-package com.fiber.common.annotation;
+package com.fiber.rpc.dubbo.annotation;
+
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,11 +12,12 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Route(method = RouteMethod.PUT)
-public @interface PutRoute {
+@FiberRoute(method = RouteMethod.POST)
+public @interface PostRoute {
 
+    @AliasFor(annotation = FiberRoute.class)
     String value() default "";
 
     String name() default "";
-    
+
 }

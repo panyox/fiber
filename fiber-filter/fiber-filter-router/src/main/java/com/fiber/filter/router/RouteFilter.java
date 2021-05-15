@@ -3,17 +3,19 @@ package com.fiber.filter.router;
 import com.fiber.common.cache.RouteCache;
 import com.fiber.common.constants.Constants;
 import com.fiber.common.enums.FiberFilters;
-import com.fiber.common.enums.ResponseCode;
 import com.fiber.common.exception.FiberException;
 import com.fiber.common.model.FiberContext;
 import com.fiber.common.model.RouteData;
 import com.fiber.common.model.ServiceData;
-import com.fiber.common.utils.RouteUtil;
+import com.fiber.common.response.ResponseCode;
 import com.fiber.filter.api.FiberFilter;
+import com.fiber.filter.router.match.MatchRule;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,16 +28,8 @@ public class RouteFilter implements FiberFilter {
     public Mono<FiberFilter> filter(ServerWebExchange exchange) {
         FiberContext context = exchange.getAttribute(Constants.FIBER_CONTEXT);
         Objects.requireNonNull(context);
-        RouteData routeData = matchRoute(context);
-        if (Objects.isNull(routeData)) {
-            routeNotFound(context);
-        }
-        log.info("route data: {}", routeData);
-        if (!routeData.getEnable()) {
-            routeNotable(context);
-        }
-        exchange.getAttributes().put(Constants.ROUTE_DATA, routeData);
-        ServiceData serviceData = matchService(routeData.getServiceId());
+
+        ServiceData serviceData = MatchRule.getInstance().matchService(context);
         if (Objects.isNull(serviceData)) {
             serviceNotFound(context);
         }
@@ -43,16 +37,19 @@ public class RouteFilter implements FiberFilter {
             serviceNotable(context);
         }
         exchange.getAttributes().put(Constants.SERVICE_DATA, serviceData);
+        List<RouteData> routes = RouteCache.getInstance().getRoute(serviceData.getId());
+        if (CollectionUtils.isEmpty(routes)) {
+            routeNotFound(context);
+        }
+        RouteData routeData = MatchRule.getInstance().matchRoute(context, routes);
+        if (Objects.isNull(routeData)) {
+            routeNotFound(context);
+        }
+        if (!routeData.getEnable()) {
+            routeNotable(context);
+        }
+        exchange.getAttributes().put(Constants.ROUTE_DATA, routeData);
         return Mono.just(this);
-    }
-
-    private RouteData matchRoute(FiberContext context) {
-        String routeId = RouteUtil.generateRouteId(context);
-        return RouteCache.getInstance().getRoute(routeId);
-    }
-
-    private ServiceData matchService(String id) {
-        return RouteCache.getInstance().getService(id);
     }
 
     private void routeNotFound(FiberContext context) {

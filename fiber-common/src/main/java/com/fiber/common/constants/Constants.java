@@ -5,11 +5,23 @@ package com.fiber.common.constants;
  */
 public interface Constants {
 
+    String EMPTY_JSON = "{}";
+
+    String SLASH = "/";
+
+    String DOT = ".";
+
+    String HASH_TAG = "#";
+
+    String AT = "@";
+
+    String VERSION_REGX = "^v\\d*\\.?\\d*$";
+
     String FIBER_ERROR = "fiberError";
 
     String FIBER_CONTENT = "fiberContent";
 
-    String RPC_TYPE = "rpcType";
+    String RPC_TYPE = "RPC";
 
     String SIGN_NAME = "sign";
 
@@ -24,5 +36,7 @@ public interface Constants {
     String FORM_DATA = "formData";
 
     String QUERY_DATA = "queryData";
+
+    String DEFAULT_VERSION = "v1";
 
 }

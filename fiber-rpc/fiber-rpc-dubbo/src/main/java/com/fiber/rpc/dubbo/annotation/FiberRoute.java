@@ -1,5 +1,7 @@
 package com.fiber.rpc.dubbo.annotation;
 
+import com.fiber.common.enums.RouteMethod;
+
 import java.lang.annotation.*;
 
 /**
@@ -17,5 +19,5 @@ public @interface FiberRoute {
     RouteMethod method() default RouteMethod.GET;
 
     boolean enable() default true;
-    
+
 }

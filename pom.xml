@@ -20,6 +20,7 @@
         <module>fiber-registry</module>
         <module>fiber-demo</module>
         <module>fiber-common</module>
+        <module>fiber-discovery</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

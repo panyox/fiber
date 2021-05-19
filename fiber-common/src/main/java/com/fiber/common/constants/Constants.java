@@ -15,6 +15,14 @@ public interface Constants {
 
     String AT = "@";
 
+    String ZK_ROOT = "/fiber";
+
+    String ZK_SERVICE_ROOT = "/fiber/service";
+
+    String ZK_DUBBO_SERVICE_ROOT = "/fiber/service/dubbo";
+
+    String ZK_FILTER_ROOT = "/fiber/register/filter";
+
     String VERSION_REGX = "^v\\d*\\.?\\d*$";
 
     String FIBER_ERROR = "fiberError";

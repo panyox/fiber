@@ -1,15 +1,12 @@
 package com.fiber.demo.bootstrap.configuration;
 
 import com.fiber.common.cache.RouteCache;
-import com.fiber.common.config.RegistryCenterConfig;
 import com.fiber.common.model.RouteData;
 import com.fiber.common.model.RouteParam;
 import com.fiber.common.model.ServiceData;
 import com.fiber.common.utils.RouteUtil;
-import com.fiber.filter.dubbo.bootstrap.ReferenceBootstrap;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,7 +44,7 @@ public class TestData {
         route.setServiceName("com.yox.service.DemoService");
         route.setEnable(true);
         List<RouteParam> params = Arrays.asList(new RouteParam("name", "java.lang.String"));
-        route.setParameters(params);
+        //route.setParameters(params);
 
         RouteCache.getInstance().saveRoute(route);
 
@@ -67,10 +64,10 @@ public class TestData {
 
         RouteCache.getInstance().saveRoute(route1);
 
-        RegistryCenterConfig config = new RegistryCenterConfig();
-        config.setAddress("localhost:2181");
-        List<ServiceData> services = new ArrayList<>();
-        services.add(service);
-        ReferenceBootstrap.init(config, services);
+//        RegistryCenterConfig config = new RegistryCenterConfig();
+//        config.setAddress("localhost:2181");
+//        List<ServiceData> services = new ArrayList<>();
+//        services.add(service);
+//        ReferenceBootstrap.init(config, services);
     }
 }

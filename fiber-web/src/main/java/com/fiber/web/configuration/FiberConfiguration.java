@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author panyox
  */
 @Configuration
-@Import(value = {ResponseConfiguration.class, ContextConfiguration.class, FilterConfiguration.class})
+@Import(value = {ResponseConfiguration.class, ContextConfiguration.class, FilterConfiguration.class, DiscoveryClientConfiguration.class})
 public class FiberConfiguration {
 
     /**

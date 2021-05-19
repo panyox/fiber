@@ -1,9 +1,8 @@
 package com.fiber.filter.api.param;
 
-import com.fiber.common.model.RouteParam;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -18,5 +17,5 @@ public interface DubboParamBuilder {
      * @param parameterTypes
      * @return
      */
-    Pair<String[], Object[]> build(String data, List<RouteParam> parameterTypes);
+    Pair<String[], Object[]> build(String data, Map<String, String> parameters);
 }

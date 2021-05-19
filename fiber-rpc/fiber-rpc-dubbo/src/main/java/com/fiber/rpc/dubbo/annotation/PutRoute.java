@@ -1,5 +1,7 @@
 package com.fiber.rpc.dubbo.annotation;
 
+import com.fiber.common.enums.RouteMethod;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

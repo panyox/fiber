@@ -5,14 +5,14 @@ import com.fiber.common.constants.Constants;
 import com.fiber.common.enums.RpcType;
 import com.fiber.common.exception.FiberException;
 import com.fiber.common.model.MetadataInfo;
+import com.fiber.common.model.URL;
 import com.fiber.common.thread.TaskExecutor;
 import com.fiber.common.utils.StringUtils;
-import com.fiber.registry.zookeeper.ZkClient;
+import com.fiber.registry.zookeeper.curator.CuratorZookeeperClient;
 import com.fiber.rpc.dubbo.annotation.FiberRoute;
 import com.fiber.rpc.dubbo.annotation.FiberService;
 import com.fiber.rpc.dubbo.register.ZookeeperRegister;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.curator.framework.CuratorFramework;
 import org.apache.dubbo.config.spring.ServiceBean;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -35,9 +35,11 @@ public class DubboServiceBeanListener implements ApplicationListener<ContextRefr
 
     private final AtomicBoolean registered = new AtomicBoolean(false);
 
-    public DubboServiceBeanListener(RegistryCenterConfig registryCenterConfig) {
-        CuratorFramework zkClient = ZkClient.createSimple(registryCenterConfig.getAddress());
-        this.zookeeperRegister = new ZookeeperRegister(zkClient);
+    public DubboServiceBeanListener(RegistryCenterConfig config) {
+        System.out.println(config);
+        log.info("config: {}", config);
+        CuratorZookeeperClient client = new CuratorZookeeperClient(new URL(config.getHost(), config.getPort()));
+        this.zookeeperRegister = new ZookeeperRegister(client);
     }
 
     @Override

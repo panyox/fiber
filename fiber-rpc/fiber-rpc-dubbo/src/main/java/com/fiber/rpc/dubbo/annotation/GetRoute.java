@@ -1,5 +1,6 @@
 package com.fiber.rpc.dubbo.annotation;
 
+import com.fiber.common.enums.RouteMethod;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
